@@ -37,10 +37,20 @@ export default async function HomePage() {
         </div>
 
         <div className="mt-6 flex gap-3 flex-wrap">
-          <a href="/profile"
-             className="text-sm px-4 py-2 rounded-full font-semibold border border-rule hover:bg-paper transition-colors">
+          <a
+            href="/profile"
+            className="text-sm px-4 py-2 rounded-full font-semibold border border-rule hover:bg-paper transition-colors"
+          >
             Мой профиль
           </a>
+          {profile?.role === "admin" && (
+            <a
+              href="/venue"
+              className="text-sm px-4 py-2 rounded-full font-semibold border border-rule hover:bg-paper transition-colors"
+            >
+              Заведение
+            </a>
+          )}
           <form action={signOutAction}>
             <button
               type="submit"
