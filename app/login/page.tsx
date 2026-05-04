@@ -5,16 +5,16 @@ import { loginAction } from "./actions";
 import { AlertCircle, Check, Loader } from "lucide-react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submit = async () => {
-    if (!email || !password || loading) return;
+    if (!login || !password || loading) return;
     setError("");
     setLoading(true);
-    const result = await loginAction({ email, password });
+    const result = await loginAction({ login, password });
     if (result && !result.ok) {
       setError(result.reason || "Не удалось войти");
       setLoading(false);
@@ -44,14 +44,14 @@ export default function LoginPage() {
         <div className="rounded-3xl p-6 flex flex-col gap-4 bg-paper border border-rule">
           <div>
             <div className="text-xs uppercase tracking-wider mb-1 text-ink-soft">
-              Email
+              Логин
             </div>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); setError(""); }}
+              type="text"
+              value={login}
+              onChange={(e) => { setLogin(e.target.value); setError(""); }}
               onKeyDown={onKey}
-              placeholder="admin@example.com"
+              placeholder="например: admin"
               autoComplete="username"
               autoFocus
               className="w-full px-3 py-3 rounded-xl text-sm bg-cream outline-none"
@@ -81,11 +81,11 @@ export default function LoginPage() {
           )}
           <button
             onClick={submit}
-            disabled={!email || !password || loading}
+            disabled={!login || !password || loading}
             className="w-full py-3 rounded-full text-sm font-semibold flex items-center gap-2 justify-center text-white transition-colors"
             style={{
-              background: (!email || !password || loading) ? "var(--color-rule)" : "var(--color-brick)",
-              opacity: (!email || !password || loading) ? 0.5 : 1,
+              background: (!login || !password || loading) ? "var(--color-rule)" : "var(--color-brick)",
+              opacity: (!login || !password || loading) ? 0.5 : 1,
             }}
           >
             {loading ? <Loader size={14} className="animate-spin" /> : <Check size={14} />}

@@ -3,17 +3,22 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-export async function loginAction(formData: { email: string; password: string }) {
+const EMAIL_DOMAIN = "borsok.local";
+
+export async function loginAction(formData: { login: string; password: string }) {
   const supabase = await createClient();
 
+  // Превращаем логин в синтетический email
+  const email = `${formData.login.trim().toLowerCase()}@${EMAIL_DOMAIN}`;
+
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: formData.email,
+    email,
     password: formData.password,
   });
 
   if (error) {
     if (error.message.includes("Invalid login credentials")) {
-      return { ok: false, reason: "Неверный email или пароль" };
+      return { ok: false, reason: "Неверный логин или пароль" };
     }
     return { ok: false, reason: error.message };
   }
